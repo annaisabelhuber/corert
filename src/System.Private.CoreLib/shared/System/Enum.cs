@@ -271,10 +271,10 @@ namespace System
             return result!;
         }
 
-        public static TEnum Parse<TEnum>(string value) where TEnum : struct =>
+        public static TEnum Parse<TEnum>(string value) where TEnum : struct, Enum =>
             Parse<TEnum>(value, ignoreCase: false);
 
-        public static TEnum Parse<TEnum>(string value, bool ignoreCase) where TEnum : struct
+        public static TEnum Parse<TEnum>(string value, bool ignoreCase) where TEnum : struct, Enum
         {
             bool success = TryParse<TEnum>(value, ignoreCase, throwOnFailure: true, out TEnum result);
             Debug.Assert(success);
@@ -357,13 +357,13 @@ namespace System
             }
         }
 
-        public static bool TryParse<TEnum>(string? value, out TEnum result) where TEnum : struct =>
+        public static bool TryParse<TEnum>(string? value, out TEnum result) where TEnum : struct, Enum =>
             TryParse<TEnum>(value, ignoreCase: false, out result);
 
-        public static bool TryParse<TEnum>(string? value, bool ignoreCase, out TEnum result) where TEnum : struct =>
+        public static bool TryParse<TEnum>(string? value, bool ignoreCase, out TEnum result) where TEnum : struct, Enum =>
             TryParse<TEnum>(value, ignoreCase, throwOnFailure: false, out result);
 
-        private static bool TryParse<TEnum>(string? value, bool ignoreCase, bool throwOnFailure, out TEnum result) where TEnum : struct
+        private static bool TryParse<TEnum>(string? value, bool ignoreCase, bool throwOnFailure, out TEnum result) where TEnum : struct, Enum
         {
             // Validation on the enum type itself.  Failures here are considered non-parsing failures
             // and thus always throw rather than returning false.
